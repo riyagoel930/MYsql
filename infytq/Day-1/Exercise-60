@@ -1,0 +1,2 @@
+//Display the names of salesmen who have made at least 2 sales.
+SELECT SNAME FROM SALESMAN WHERE SID IN (SELECT SID FROM Sale GROUP BY SID HAVING COUNT(SALEID)>=2)
