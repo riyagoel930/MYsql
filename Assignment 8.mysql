@@ -32,3 +32,24 @@ INSERT INTO  ORDERS VALUES(70012,250.45,TO_DATE('2012-06-27','YYYY-MM-DD'),3008,
 INSERT INTO  ORDERS VALUES(70011,75.29,TO_DATE('2012-08-17','YYYY-MM-DD'),3003,5007);
 INSERT INTO  ORDERS VALUES(70013,3045.6,TO_DATE('2012-04-25','YYYY-MM-DD'),3002,5001);
 SELECT * FROM ORDERS;
+
+SELECT SALESMANS.NAME AS "SALESMAN",CUSTOMER.CUST_NAME,CUSTOMER.CITY FROM SALESMANS,CUSTOMER WHERE SALESMANS.CITY=CUSTOMER.CITY
+SELECT SALESMANS.NAME AS "SALESMAN",CUSTOMER.CUST_NAME,CUSTOMER.CITY FROM SALESMANS,CUSTOMER WHERE SALESMANS.CITY=CUSTOMER.CITY
+SELECT ORDERS.ORD_NO,ORDERS.PURCHASE_AMT,CUSTOMER.CUST_NAME,CUSTOMER.CITY FROM ORDERS ,CUSTOMER  WHERE ORDERS.CUTOMER_ID = CUSTOMER.CUSTOMER_ID AND ORDERS.PURCHASE_AMT BETWEEN 500 AND 2000
+SELECT a.cust_name AS "Customer Name", a.city, b.name AS "Salesman", b.commission FROM customer a INNER JOIN salesmans b ON a.salesman_id=b.salesman_id
+SELECT a.cust_name AS "Customer Name", a.city, b.name AS "Salesman", b.commission FROM customer a INNER JOIN salesmans b ON a.salesman_id=b.salesman_id WHERE b.commission>.12
+SELECT a.cust_name AS "Customer Name", a.city, b.name AS "Salesman", b.city,b.commission FROM customer a INNER JOIN salesmans b ON a.salesman_id=b.salesman_id WHERE b.commission>.12 AND a.city<>b.city
+
+SELECT a.ord_no,a.ord_date,a.purchase_amt, b.cust_name , b.grade, c.name AS , c.commission FROM orders a INNER JOIN customers b ON a.customer_id=b.customer_id INNER JOIN salesmans c ON a.salesman_id=c.salesman_id
+SELECT a.ord_no,a.ord_date,a.purch_amt, b.cust_name AS "Customer Name", b.grade, c.name AS "Salesman", c.commission FROM orders a INNER JOIN customer b ON a.customer_id=b.customer_id INNER JOIN salesmans c ON a.salesman_id=c.salesman_id
+SELECT a.ord_no,a.ord_date,a.purchase_amt, b.cust_name AS "Customer Name", b.grade, c.name AS "Salesman", c.commission FROM orders a INNER JOIN customers b ON a.customer_id=b.customer_id INNER JOIN salesmans c ON a.salesman_id=c.salesman_id
+SELECT a.ord_no,a.ord_date,a.purchase_amt, b.cust_name AS "Customer Name", b.grade, c.name AS "Salesman", c.commission FROM orders a INNER JOIN customers b ON a.customer_id=b.customer_id INNER JOIN salesmans c ON a.salesman_id=c.salesman_id
+SELECT a.cust_name,a.city,a.grade, b.name AS "Salesman",b.city FROM customer a LEFT JOIN salesmans b ON a.salesman_id=b.salesman_id order by a.customer_id
+SELECT a.cust_name,a.city,a.grade, b.name AS "Salesman", b.city FROM customer a LEFT OUTER JOIN salesmans b ON a.salesman_id=b.salesman_id WHERE a.grade<300 ORDER BY a.customer_id
+SELECT a.cust_name,a.city, b.ord_no, b.order_date,b.purchase_amt AS "Order Amount" FROM customer a LEFT OUTER JOIN orders b ON a.customer_id=b.customer_id order by b.order_date;
+SELECT a.cust_name,a.city, b.ord_no, b.order_date,b.purchase_amt AS "Order Amount" FROM customer a LEFT OUTER JOIN orders b ON a.customer_id=b.cutomer_id order by b.order_date;\
+SELECT a.cust_name,a.city, b.ord_no, b.order_date,b.purchase_amt , c.name,c.commission FROM customer a LEFT OUTER JOIN orders b ON a.customer_id=b.cutomer_id LEFT OUTER JOIN salesman c ON c.salesman_id=b.salesman_id;
+SELECT a.cust_name,a.city,a.grade, b.name, b.city FROM customer a RIGHT OUTER JOIN salesmans b ON b.salesman_id=a.salesman_id ORDER BY b.salesman_id;
+SELECT a.cust_name,a.city,a.grade, b.name, c.ord_no, c.order_date, c.purchase_amt FROM customer a RIGHT OUTER JOIN salesmans b ON b.salesman_id=a.salesman_id RIGHT OUTER JOIN orders c ON c.cutomer_id=a.customer_id;
+
+SELECT a.cust_name,a.city,a.grade, b.name, c.ord_no, c.order_date, c.purchase_amt FROM customer a RIGHT OUTER JOIN salesmans b ON b.salesman_id=a.salesman_id LEFT OUTER JOIN orders c ON c.cutomer_id=a.customer_id WHERE c.purchase_amt>=2000 AND a.grade IS NOT NULL;
