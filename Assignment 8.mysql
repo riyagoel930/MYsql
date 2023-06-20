@@ -51,5 +51,32 @@ SELECT a.cust_name,a.city, b.ord_no, b.order_date,b.purchase_amt AS "Order Amoun
 SELECT a.cust_name,a.city, b.ord_no, b.order_date,b.purchase_amt , c.name,c.commission FROM customer a LEFT OUTER JOIN orders b ON a.customer_id=b.cutomer_id LEFT OUTER JOIN salesman c ON c.salesman_id=b.salesman_id;
 SELECT a.cust_name,a.city,a.grade, b.name, b.city FROM customer a RIGHT OUTER JOIN salesmans b ON b.salesman_id=a.salesman_id ORDER BY b.salesman_id;
 SELECT a.cust_name,a.city,a.grade, b.name, c.ord_no, c.order_date, c.purchase_amt FROM customer a RIGHT OUTER JOIN salesmans b ON b.salesman_id=a.salesman_id RIGHT OUTER JOIN orders c ON c.cutomer_id=a.customer_id;
-
 SELECT a.cust_name,a.city,a.grade, b.name, c.ord_no, c.order_date, c.purchase_amt FROM customer a RIGHT OUTER JOIN salesmans b ON b.salesman_id=a.salesman_id LEFT OUTER JOIN orders c ON c.cutomer_id=a.customer_id WHERE c.purchase_amt>=2000 AND a.grade IS NOT NULL;
+
+CREATE TABLE COMPANY_MAST(COM_ID NUMBER,COM_NAME VARCHAR2(23))
+INSERT INTO COMPANY_MAST VALUES (11,'SAMSUNG')
+INSERT INTO COMPANY_MAST VALUES(12,'IBALL')
+INSERT INTO COMPANY_MAST VALUES(13,'EPSION')
+INSERT INTO COMPANY_MAST VALUES(14,'ZEBRONICS')
+INSERT INTO COMPANY_MAST VALUES(15,'ASUS')
+INSERT INTO COMPANY_MAST VALUES(16,'FRONTECH')
+SELECT * FROM COMPANY_MAST
+
+CREATE TABLE ITEM_MAST(PRO_ID NUMBER,PRO_NAME VARCHAR2(23),PRO_PRICE NUMBER,PRO_COM NUMBER)
+INSERT INTO ITEM_MAST VALUES(101,'MOTHER BOARD',3200,15)
+INSERT INTO ITEM_MAST VALUES(102,'KEY BOARD',450,16)
+INSERT INTO ITEM_MAST VALUES(103,'ZIP DRIVE',250,14)
+INSERT INTO ITEM_MAST VALUES(104,'SPEAKER',550,16)
+INSERT INTO ITEM_MAST VALUES(105,'MONITOR',5000,11)
+INSERT INTO ITEM_MAST VALUES(106,'DVD DRIVE',900,12)
+INSERT INTO ITEM_MAST VALUES(107,'CD DRIVE',800,12)
+INSERT INTO ITEM_MAST VALUES(108,'PRINTER',2600,13)
+INSERT INTO ITEM_MAST VALUES(109,'REFILL CARTRIDGE',350,13)
+INSERT INTO ITEM_MAST VALUES(110,'MOUSE',250,14)
+SELECT * FROM ITEM_MAST;
+
+SELECT * FROM item_mast INNER JOIN company_mast ON item_mast.pro_com= company_mast.com_id;
+SELECT item_mast.pro_name, pro_price, company_mast.com_name FROM item_mast INNER JOIN company_mast ON item_mast.pro_com = company_mast.com_id;
+SELECT AVG(pro_price), company_mast.com_name FROM item_mast INNER JOIN company_mast ON item_mast.pro_com= company_mast.com_id GROUP BY company_mast.com_name;
+SELECT AVG(pro_price), company_mast.com_name FROM item_mast INNER JOIN company_mast ON item_mast.pro_com= company_mast.com_id GROUP BY company_mast.com_name HAVING AVG(pro_price) >= 350;
+SELECT A.pro_name, A.pro_price, F.com_name FROM item_mast A INNER JOIN company_mast F ON A.pro_com = F.com_id AND A.pro_price = ( SELECT MAX(A.pro_price) FROM item_mast A WHERE A.pro_com = F.com_id );
